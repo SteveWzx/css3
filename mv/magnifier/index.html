@@ -1,0 +1,200 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+body{margin:0;background:#e8d0ca;}
+ul{margin:0;padding:0; list-style:none;}
+img{ vertical-align:top;}
+#picTab{width:400px;margin:100px auto 0; position:relative;}
+#picList{ width:370px;height:80px; position:relative; }
+#picList li{ position:absolute; left:0;top:-80px; transition:0.5;opacity:0;}
+#picList .active{ top:0;opacity:1;}
+#textList{width:380px;height:50px; margin-top:30px; position:relative;overflow:hidden; }
+#textList li{ position:absolute;left:380px;top:0;}
+#textList .active{left:0;}
+#btns{ float:right;margin-top:20px;}
+#btns li{float:left;width:20px;height:21px;background:url(img/iCourseTabBtnShadow.png) no-repeat;margin:0 10px;}
+#btns span{ display:block; height:21px;background:url(img/iCourseIco.png) no-repeat center 4px; -webkit-transform:scale(0);-moz-transform:scale(0);transform:scale(0); transition:0.3s;}
+#btns .active span{-webkit-transform:scale(1);-moz-transform:scale(1);transform:scale(1);}
+#zoom{width:144px;height:172px;background:url(img/iZoom.png) no-repeat; position:absolute;top:-13px;left:-92px; -webkit-transform-origin:left bottom;}
+#zoomPic{ position:absolute;right:4px;top:4px;width:98px;height:98px;background:#e8d0ca; border-radius:50%; overflow:hidden; -webkit-mask:url(img/mask.png) no-repeat 0 0;}
+#zoomPic .pic{ width:98px;height:98px;border-radius:50%; position:relative;  }
+#zoomPic .pic{ width:98px;height:98px;background:url(img/iBannerTextBig.png) no-repeat; border-radius:50%; -webkit-transform-origin:-44px 170px;}
+#zoomPic .mask{ width:98px;height:98px;background:url(img/iZoomGlass.png) no-repeat; border-radius:50%; position:absolute;left:0;top:0;}
+</style>
+<script src="jq.js"></script>
+<script>
+window.onload=function()
+{
+	var oPicList=document.getElementById("picList");
+	var oZoom=document.getElementById("zoom");
+	var iPicListX=getXy(oPicList).l;
+	var oTime=null;
+	toZoomMove(10);
+	oZoom.onmousemove=oPicList.onmousemove=function(ev)
+	{
+		clearTimeout(oTime);
+		var iX=ev.clientX;
+		if(iX>iPicListX && iX<iPicListX+oPicList.offsetWidth)
+		{
+			toZoomMove(iX-iPicListX);
+		}
+		else
+		{
+			toZoomMove(10);
+		}
+	};
+	oZoom.onmouseout=oPicList.onmouseout=function()
+	{
+		clearTimeout(oTime);
+		oTime=setTimeout(function(){
+			toZoomMove(10);
+		},50);
+	};
+	tab();
+};
+function tab()
+{
+	var oBtns=document.getElementById("btns").children;
+	var aPicList=document.getElementById("picList").children;
+	var aPicList2=document.getElementById("textList").children;
+	var oPic=document.getElementById("zoomPic").children[0];
+	var oZoom=document.getElementById("zoom");
+	var iNow=0;
+	var aSrc=["img/iBannerTextBig.png","img/iBannerTextBig2.png","img/iBannerTextBig3.png"];
+	for(var i=0;i<oBtns.length;i++)
+	{
+		(function(a){
+			oBtns[a].onclick=function()
+			{
+				zoomHide(a);
+				picTab(iNow,a);
+				textTab(iNow,a);
+				oBtns[iNow].className="";
+				iNow=a;
+				oBtns[iNow].className="active";
+			};
+		})(i);
+	}
+	function picTab(now,a)
+	{
+		aPicList2[now].style.transition=".3s";
+		aPicList2[now].addEventListener("webkitTransitionEnd",end1,false);
+		aPicList2[now].style.top="50px";
+		aPicList2[a].addEventListener("webkitTransitionEnd",end2,false);
+		aPicList2[a].style.transition=".5s .3s";
+		aPicList2[a].style.left=0;
+		function end1()
+		{
+			aPicList2[now].style.transition="0s";
+			aPicList2[now].style.left="380px";
+			aPicList2[now].style.top="0";
+			this.removeEventListener("webkitTransitionEnd",end1,false);
+		}
+		function end2()
+		{
+			zoomShow();
+			this.removeEventListener("webkitTransitionEnd",end2,false);
+		}
+	}
+	function textTab(now,a)
+	{
+		aPicList[now].style.transition=".5s";
+		aPicList[now].addEventListener("webkitTransitionEnd",end1,false);
+		aPicList[now].style.left="50px";
+		aPicList[now].style.opacity=0;
+		aPicList[a].style.transition=".5s .2s";
+		aPicList[a].style.top="0";
+		aPicList[a].style.opacity=1;
+		function end1()
+		{
+			aPicList[now].style.transition="0s";
+			aPicList[now].style.left="0";
+			aPicList[now].style.top="-80px";
+			this.removeEventListener("webkitTransitionEnd",end1,false);
+		}
+	}
+	function zoomHide(a)
+	{
+		oZoom.style.transition=".5s linear";
+		oPic.style.transition=".5s linear";
+		oZoom.style.WebkitTransform="rotate(-60deg)";
+		//oPic.style.opacity="0";
+		oPic.style.WebkitTransform="rotate(60deg)";
+		oPic.style.backgroundImage="url("+aSrc[a]+")";
+	}
+	function zoomShow()
+	{
+		oZoom.style.transition=".5s linear";
+		oZoom.style.WebkitTransform="rotate(0deg)";
+		oPic.style.transition=".5s linear";
+		oPic.style.WebkitTransform="rotate(0deg)";
+		//oPic.style.opacity=1;
+	}
+}
+function toZoomMove(x)
+{
+	var oPic=document.getElementById("zoomPic").children[0];
+	var oZoom=document.getElementById("zoom");
+	var iDisX=92;
+	var iScale=442/363;
+	var iLeft=x*iScale;
+	var iWidth=oPic.offsetWidth;
+	var iTime=Math.abs(x-iDisX-oZoom.offsetLeft)*2;
+	if(iTime<50)
+	{
+		iTime=0;
+	}
+	oZoom.style.transition=iTime+"ms";
+	oZoom.style.left=x-iDisX+"px";
+	oPic.style.transition=iTime+"ms";
+	oPic.style.backgroundPosition=-iLeft+iWidth/2+"px 0px";
+	
+}
+function getXy(obj)
+{
+	var oXy={l:0,t:0};
+	while(obj)
+	{
+		oXy.l+=obj.offsetLeft;
+		oXy.t+=obj.offsetTop;
+		obj=obj.offsetParent;
+	}
+	return oXy;
+}
+</script>
+</head>
+<body>
+<div id="picTab">
+	<ul id="picList">
+    	<li class="active">
+        	<img src="img/iBannerText.png" />
+        </li>
+        <li>
+        	<img src="img/iBannerText2.png" />
+        </li>
+        <li>
+        	<img src="img/iBannerText3.png" />
+        </li>
+    </ul>
+    <ul id="textList">
+    	<li class="active"><img src="img/iCourseTabText.png" /></li>
+        <li><img src="img/iCourseTabText2.png" /></li>
+        <li><img src="img/iCourseTabText3.png" /></li>
+    </ul>
+    <ul id="btns">
+    	<li class="active"><span></span></li>
+        <li><span></span></li>
+        <li><span></span></li>
+    </ul>
+    <div id="zoom">
+    	<div id="zoomPic">
+        	<div class="pic"></div>
+            <div class="mask"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

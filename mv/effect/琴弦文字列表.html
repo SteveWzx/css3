@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+#list{ width:302px; margin:50px auto;padding:0; list-style:none;}
+#list li{ height:30px; font:12px/30px "宋体"; border:1px solid #000; position:relative;}
+#list span{width:12px;height:12px; line-height:12px;}
+</style>
+<script src="tween.js"></script>
+<script>
+window.onload=function()
+{
+	var oList=document.getElementById("list");
+	var aLi=oList.getElementsByTagName("li");
+	var iLiHeight=aLi[0].offsetHeight;
+	for(var i=0;i<aLi.length;i++)
+	{
+		var sHtml=aLi[i].innerHTML;
+		aLi[i].innerHTML="";
+		for(var j=0;j<sHtml.length;j++)
+		{
+			aLi[i].innerHTML+="<span>"+sHtml[j]+"</span>"
+		}
+		var aSpan=aLi[i].children;
+		for(var j=0;j<aSpan.length;j++)
+		{
+			aSpan[j].style.left=aSpan[j].offsetLeft+"px";
+			aSpan[j].style.top=aSpan[j].offsetTop+"px";
+			aSpan[j].startTop=aSpan[j].offsetTop;
+		}
+		for(var j=0;j<aSpan.length;j++)
+		{
+			aSpan[j].style.position="absolute";
+			(function(aSpan,nub2){ 
+				var iStart=0;
+				var iSpanHeight=aSpan[0].offsetHeight;
+				aSpan[nub2].onmouseover=function(ev)
+				{
+					iStart=ev.clientY;
+				};
+				aSpan[nub2].onmousemove=function(ev)
+				{
+					var iDis=ev.clientY-iStart;
+					var iNub=iDis>0?1:-1;
+					if(this.startTop+iDis>=0 && this.startTop+iDis< (iLiHeight-iSpanHeight))
+					{
+						//this.style.top=this.startTop+iDis+"px";
+						/*
+							假设 选中 8  6
+							0 0
+ 							1 0
+							2 0
+							3 1
+							4 2
+							5 3
+							6 4
+							7 5
+							8 6
+							9 5
+							10 4
+							11 3
+							12 2
+							13 1
+							14 0
+							15 0
+							16 0
+							。。。
+						*/
+						for(var j=0;j<aSpan.length;j++)
+						{
+							if(Math.abs(iDis)>Math.abs(nub2-j))
+							{
+							aSpan[j].style.top=aSpan[j].startTop+(Math.abs(iDis)-Math.abs(nub2-j))*iNub+"px";
+							}
+							else
+							{
+								aSpan[j].style.top=aSpan[j].startTop+"px";
+							}
+						}
+					}
+				};
+				aSpan[nub2].onmouseout=function(ev)
+				{
+					for(var j=0;j<aSpan.length;j++)
+					{
+						starMove(aSpan[j],{top:aSpan[j].startTop},500,"elasticOut");
+					}
+				};	
+			})(aSpan,j);
+		}		
+	}
+};
+</script>
+</head>
+<body>
+<ul id="list">
+	<li>妙味琴弦文字列表图片高斯模糊切换1</li>
+    <li>妙味琴弦文字列表图片高斯模糊切换22</li>
+    <li>妙味琴弦文字列表图片高斯模糊切换333</li>
+    <li>妙味琴弦文字列表图片高斯模糊切换4444</li>
+    <li>妙味琴弦文字列表图片高斯模糊切换55555</li>
+</ul>
+</body>
+</html>

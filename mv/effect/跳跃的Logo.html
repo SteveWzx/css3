@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+@-webkit-keyframes move
+{
+	0%
+	{
+		-webkit-transform:translateY(0px)
+	}	
+	100%
+	{
+		-webkit-transform:translateY(-15px)
+	}
+}
+#logo{width:300px;height:300px;border:1px solid #000;border-radius:50%; box-shadow:0 3px 5px rgba(0,0,0,0.5); transition:.5s; position:absolute;left:50px;top:-50px;}
+#logo:hover{ width:260px;height:260px;left:70px;}
+#logoImg{width:198px;height:80px; margin:120px auto;}
+#logoImg span{width:30px;height:80px; float:left;margin:0 1px 0 2px;}
+#logoImg span:nth-of-type(1){ background:#C06; -webkit-animation:.5s move alternate infinite; }
+#logoImg span:nth-of-type(2){ background:#3CF; -webkit-animation:.5s .1s move alternate infinite;}
+#logoImg span:nth-of-type(3){ background:#C6C; -webkit-animation:.5s .2s move alternate infinite;}
+#logoImg span:nth-of-type(4){ background:#369; -webkit-animation:.5s .3s move alternate infinite;}
+#logoImg span:nth-of-type(5){ background:#6F9; -webkit-animation:.5s .4s move alternate infinite;}
+#logoImg span:nth-of-type(6){ background:#CF6; -webkit-animation:.5s .5s move alternate infinite;}
+#logo #logoImg span{ -webkit-animation-play-state:paused;}
+#logo:hover #logoImg span{ -webkit-animation-play-state:running;}
+</style>
+</head>
+<body>
+<div id="logo">
+	<div id="logoImg">
+    	<span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</div>
+</body>
+</html>
+ 

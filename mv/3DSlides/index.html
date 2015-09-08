@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+body,html{height:100%;overflow:hidden;}
+body{background:#e8d0ca;}
+.wrap{width:710px;height:390px; margin:100px auto; position:relative;}
+#list{ margin:0;padding:0; list-style:none;width:100%;height:100%; position:relative;}
+#list li{ width:690px;height:370px;border:10px solid #fff; border-radius:5px; background:url(img/1.jpeg) no-repeat; box-shadow:0 0 10px rgba(0,0,0,0.5),inset 0 0 5px rgba(0,0,0,1); position:absolute;left:0;top:0;opacity:0;}
+.btn{ width:40px;height:42px;box-shadow:0 0 10px rgba(0,0,0,0.5);border-radius:5px; position:absolute;top:150px;background:url(img/btn.png) no-repeat #fff;  opacity:0; z-index:10; transition:.5s opacity;}
+.prev{left:-20px;  }
+.prev:hover{background-position:0 0;}
+.next{right:-20px; background-position:right bottom;}
+.next:hover{ background-position:right 0;}
+</style>
+<script>
+window.onload=function()
+{
+	var aImg=["img/1.jpeg","img/2.jpeg","img/3.jpeg","img/4.jpeg"];
+	var iLength=aImg.length
+	var iNub=0;
+	var oWrap=document.getElementsByClassName("wrap")[0];
+	var oList=document.getElementById("list");
+	var aLi;
+	var aBtn=oWrap.getElementsByClassName("btn");
+	var iNow=0;
+	var iZindex=iLength;
+	oWrap.onmouseover=function()
+	{
+		for(var i=0;i<aBtn.length;i++)
+		{
+			aBtn[i].style.opacity=1;
+		}
+	};
+	oWrap.onmouseout=function()
+	{
+		for(var i=0;i<aBtn.length;i++)
+		{
+			aBtn[i].style.opacity=0;
+		}
+	};
+	aBtn[0].onclick=function()
+	{
+		iNow--;
+		if(iNow<0)
+		{
+			iNow=aLi.length-1;
+		}
+		for(var i=0;i<aBtn.length;i++)
+		{
+			aBtn[i].style.opacity=0;
+		}
+		aLi[iNow].addEventListener("webkitTransitionEnd",end,false);
+		aLi[iNow].style.transition="1s";
+		aLi[iNow].style.left="-100%";
+		aLi[iNow].style.opacity=0;
+	};
+	aBtn[1].onclick=function()
+	{
+		iNow++;
+		if(iNow>aLi.length-1)
+		{
+			iNow=0;
+		}
+		for(var i=0;i<aBtn.length;i++)
+		{
+			aBtn[i].style.opacity=0;
+		}
+		aLi[iNow].addEventListener("webkitTransitionEnd",end,false);
+		aLi[iNow].style.transition="1s";
+		aLi[iNow].style.left="100%";
+		aLi[iNow].style.opacity=0;
+	};
+	function end()
+	{
+		var _this=this;
+		this.removeEventListener("webkitTransitionEnd",end,false)
+		this.style.transition="none";
+		this.style.WebkitTransform="rotate("+this.iDeg+"deg) scale(1.2)";
+		iZindex++;
+		_this.style.zIndex=iZindex;
+		setTimeout(function(){
+			_this.style.transition="0.6s";
+			_this.style.left=0;
+			_this.style.opacity=1;
+			_this.style.WebkitTransform="rotate("+_this.iDeg+"deg) scale(1)";	
+		},50);
+		
+	}
+	for(var i=0;i<aImg.length;i++)
+	{
+		var oImg=new Image();
+		oImg.src=aImg[i];
+		oImg.onload=function()
+		{
+			iNub++;
+			if(iNub==iLength)
+			{
+				start();
+			}
+		};
+	}
+	function start()
+	{
+		var sHtml="";
+		for(var i=0;i<aImg.length;i++)
+		{
+			sHtml+="<li style='background-image:url("+aImg[i]+");z-index:"+(aImg.length-i)+"'></li>";
+		}	
+		oList.innerHTML=sHtml;
+		aLi=oList.children;
+		for(var i=0;i<aLi.length;i++)
+		{
+			var iDeg=parseInt(Math.random()*100)%3+i*4;
+			aLi[i].iDeg=iDeg;
+			aLi[i].style.WebkitTransform="rotate("+iDeg+"deg) scale(1.5)";
+		}
+		setTimeout(function(){
+			show();	
+		},100);
+	}
+	function show()
+	{
+		for(var i=0;i<aLi.length;i++)
+		{
+			aLi[i].style.transition=".5s "+(aLi.length-i)*300+"ms";
+			aLi[i].style.WebkitTransform="rotate("+aLi[i].iDeg+"deg) scale(1)";
+			aLi[i].style.opacity=1;
+		}
+	}
+};
+</script>
+</head>
+<body>
+<div class="wrap">
+	<ul id="list">
+    	
+    </ul>
+    <a href="javascript:;" class="btn prev"></a>
+    <a href="javascript:;" class="btn next"></a>
+</div>
+</body>
+</html>

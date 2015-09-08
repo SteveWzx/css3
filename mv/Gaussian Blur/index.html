@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+@-webkit-keyframes show
+{
+	0%{
+		opacity:1;
+		-webkit-transform:scale(1);
+	}
+	100%
+	{
+		opacity:.1;
+		-webkit-transform:scale(3);
+	}
+}
+body{ background:#e8d0ca;}
+#wrap{width:600px; margin:100px auto;border:2px solid #000; position:relative;}
+#list{ position:relative; height:310px;margin:0;padding:0; list-style:none;}
+#list li{ width:281px;height:310px; background:url(img/iWorks_1.png) no-repeat; position:absolute;top:0; transition:.6s;}
+#list span{ width:100%;height:100%; display:block;transition:.6s;}
+#list li:nth-of-type(1){ left:0;z-index:1; -webkit-transform:scale(0.8);opacity:0.6;}
+#list li:nth-of-type(1) span{ background:url(img/iWorksBlur_1.png); opacity:1;}
+#list li:nth-of-type(2){ left:calc(50% - 140px);background-image:url(img/iWorks_2.png);z-index:2; opacity:1;}
+#list li:nth-of-type(2) span{ background:url(img/iWorksBlur_2.png); opacity:0;}
+#list li:nth-of-type(3){ left:calc(100% - 281px);background-image:url(img/iWorks_3.png);z-index:1;-webkit-transform:scale(0.8); opacity:0.6;}
+#list li:nth-of-type(3) span{ background:url(img/iWorksBlur_3.png); opacity:1;}
+.btn{width:18px;height:29px; position:absolute;top:130px;z-index:10; cursor:pointer;}
+.btn span{ position:absolute;left:0;top:0; background:inherit; width:100%;height:100%;  transition:.5s;}
+.btn:hover span:nth-of-type(1){-webkit-animation:show 2s infinite; }
+.btn:hover span:nth-of-type(2){-webkit-animation:show 2s 1s infinite; }
+#prev{ left:80px; background:url(img/iWorksPrev.png) no-repeat;}
+#next{ right:80px; background:url(img/iWorksNext.png) no-repeat;}
+</style>
+</head>
+<body>
+<div id="wrap">
+	<ul id="list">
+    	<li>
+        	<span></span>
+        </li>
+        <li>
+        	<span></span>
+        </li>
+        <li>
+        	<span></span>
+        </li>
+    </ul>
+    <div id="prev" class="btn">
+    	<span></span>
+        <span></span>
+    </div>
+    <div id="next" class="btn">
+    	<span></span>
+        <span></span>
+    </div>
+</div>
+<script>
+window.onload=function()
+{
+	var oList=document.getElementById("list");
+	var aLi=oList.children;
+	var oPrev=document.getElementById("prev");
+	var oNext=document.getElementById("next");
+	var arr=[];
+	//arr.unshift(arr.pop());
+	//arr.push(arr.shift());
+	for(var i=0;i<aLi.length;i++)
+	{
+		var oSpan=aLi[i].children[0];
+		arr[i]={left:getStyle(aLi[i],"left"),opacity:getStyle(aLi[i],"opacity"),scale:getStyle(aLi[i],"-webkit-transform"),zIndex:getStyle(aLi[i],"z-index"),alpha:getStyle(oSpan,"opacity")};
+	}
+	oPrev.onclick=function()
+	{
+		arr.unshift(arr.pop());
+		toStyle();
+	};
+	oNext.onclick=function()
+	{
+		arr.push(arr.shift());
+		toStyle();
+	};
+	function toStyle()
+	{
+		for(var i=0;i<aLi.length;i++)
+		{
+			var oSpan=aLi[i].children[0];
+			aLi[i].style.left=arr[i].left;
+			aLi[i].style.opacity=arr[i].opacity;
+			aLi[i].style.WebkitTransform=arr[i].scale;	
+			aLi[i].style.zIndex=arr[i].zIndex;	
+			oSpan.style.opacity=arr[i].alpha;			//arr[i]={left:getStyle(aLi[i],"left"),opacity:getStyle(aLi[i],"opacity"),scale:getStyle(aLi[i],"-webkit-transform")};
+		}	
+	}
+};
+function getStyle(obj,attr)
+{
+        if( obj.currentStyle){
+                return obj.currentStyle[attr];        
+        }
+        return getComputedStyle(obj)[attr];        
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+.wrap{margin:30px auto;width:302px;-webkit-perspective:800px; -webkit-transform-style:preserve-3d; position:relative;}
+.wrap div{ position:absolute; top:52px;left:0;-webkit-transform-style:preserve-3d; -webkit-transform-origin:top;}
+.wrap span{ display:block;width:300px;border:1px solid #000;height:50px; font:16px/50px "宋体"; background:#ccc;}
+</style>
+</head>
+<body>
+<input type="button" value="展开" />
+<input type="button" value="收缩" />
+<div class="wrap" id="list">
+	<span>第一项</span>
+    <div>
+    	<span>第二项</span>
+        <div>
+        	<span>第三项</span>
+            <div>
+            	<span>第四项</span>
+                <div>
+            		<span>第五项</span>
+                    <div>
+                    	<span>第六项</span>
+                        <div>
+                        	<span>第七项</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+window.onload=function()
+{
+	var oList=document.getElementById("list");
+	var aDiv=oList.getElementsByTagName("div");
+	var aBtn=document.getElementsByTagName("input");
+	aBtn[1].onclick=function()
+	{
+		for(var i=0;i<aDiv.length;i++)
+		{
+			aDiv[i].style.transition="0.5s "+(aDiv.length-i)*100+"ms";
+			aDiv[i].style.WebkitTransform="rotateX(60deg)";
+		}
+	};
+	aBtn[0].onclick=function()
+	{
+		for(var i=0;i<aDiv.length;i++)
+		{
+			aDiv[i].style.transition="0.5s "+i*100+"ms";
+			aDiv[i].style.WebkitTransform="rotateX(0deg)";
+		}
+	};
+};
+</script>
+</body>
+</html>
