@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+#box{width:200px;height:200px;background:Red; transition:1s width,2s height;}
+</style>
+<script>
+window.onload=function()
+{
+	var oBox=document.getElementById("box");
+	oBox.onclick=function()
+	{
+		this.style.width=this.offsetWidth+100+"px";
+		oBox.addEventListener("transitionend",tab,false);
+	};
+	/*oBox.addEventListener("transitionend",function(e){
+			this.style.width=this.offsetWidth+100+"px";
+		},false);*/
+	function tab(e){
+		this.removeEventListener("transitionend",tab,false);
+		this.style.width=this.offsetWidth+100+"px";
+	}
+};
+</script>
+</head>
+<body>
+<div id="box"></div>
+</body>
+</html>

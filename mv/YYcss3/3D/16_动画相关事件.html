@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+@-webkit-keyframes move
+{
+	0%
+	{
+		width:100px;
+	}
+	100%
+	{
+		width:800px;
+	}
+}
+#box{width:100px;height:100px;background:Red;}
+.show{ -webkit-animation:2s move 3; width:800px !important;}
+</style>
+<script>
+window.onload=function()
+{
+	var oBox=document.getElementById("box");
+	oBox.addEventListener("animationstart",fnStart,false);
+	oBox.addEventListener("webkitAnimationStart",fnStart,false);
+	oBox.addEventListener("animationend",fnEnd,false);
+	oBox.addEventListener("webkitAnimationIteration",fn,false);
+	oBox.addEventListener("animationiteration",fn,false);
+	oBox.addEventListener("webkitAnimationEnd",fnEnd,false);
+	function fn()
+	{
+		console.log("动画重复播放");
+	}
+	function fnStart()
+	{
+		console.log("动画开始了");
+	}
+	function fnEnd()
+	{
+		console.log("动画结束了");
+	}
+	oBox.onclick=function()
+	{
+		this.className="show";
+	};
+}
+</script>
+</head>
+<body>
+<div id="box"></div>
+</body>
+</html>

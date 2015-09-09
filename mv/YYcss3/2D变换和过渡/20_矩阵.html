@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+#box{width:100px;height:100px;margin:30px auto;padding:100px;border:2px solid #000; position:relative;}
+#div{width:100px;height:100px;background:blue; transition:1s; position:absolute; left:100px;top:100px;}
+/* getComputedStyle(obj, false)[name];*/
+</style>
+<script>
+window.onload=function()
+{
+	var oDiv=document.getElementById("div");
+	fnScale(oDiv,2,3)
+	
+};
+function fnScaleX(obj,nub)
+{
+	obj.style.transform="matrix("+nub+",0,0,1,0,0)";
+	obj.style.filter="progid:DXImageTransform.Microsoft.Matrix( M11= "+nub+", M12= 0, M21= 0 , M22=1,SizingMethod='auto expand')";
+	obj.style.left=(obj.offsetParent.clientWidth-obj.offsetWidth)/2+"px";
+}
+function fnScale(obj,x,y)
+{
+	obj.style.transform="matrix("+x+",0,0,"+y+",0,0)";
+	obj.style.filter="progid:DXImageTransform.Microsoft.Matrix( M11= "+x+", M12= 0, M21= 0 , M22="+y+",SizingMethod='auto expand')";
+	obj.style.left=(obj.offsetParent.clientWidth-obj.offsetWidth)/2+"px";
+	obj.style.top=(obj.offsetParent.clientHeight-obj.offsetHeight)/2+"px";
+}
+</script>
+</head>
+<body>
+<div id="box">
+	<div id="div"></div>
+</div>
+</body>
+</html>

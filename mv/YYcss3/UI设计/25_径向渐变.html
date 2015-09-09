@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+.box{width:200px;height:300px;background:-moz-radial-gradient(20px 20px,closest-side,red,blue); border:2px solid #000;float:left;}
+.box:nth-of-type(2){background:-moz-radial-gradient(20px 20px,closest-corner,red,blue);}
+.box:nth-of-type(3){background:-moz-radial-gradient(20px 20px,farthest-side,red,blue);}
+.box:nth-of-type(4){background:-moz-radial-gradient(20px 20px,farthest-corner,red,blue);}
+.box:nth-of-type(5){background:-moz-radial-gradient(20px 20px,contain,red,blue);}
+.box:nth-of-type(6){background:-moz-radial-gradient(20px 20px,cover,red,blue);}
+</style>
+</head>
+<body>
+<div class="box"></div>
+<div class="box"></div>
+<div class="box"></div>
+<div class="box"></div>
+<div class="box"></div>
+<div class="box"></div>
+</body>
+</html>

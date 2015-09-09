@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+#box{width:200px;height:200px;background:Red; transition:1s;}
+</style>
+<script>
+window.onload=function()
+{
+	var oBox=document.getElementById("box");
+	oBox.onclick=function()
+	{
+		oBox.style.cssText="width:300px;height:400px;background:blue;";
+	};
+	oBox.addEventListener("transitionend",function(){
+			alert("结束");
+		},false);
+};
+</script>
+</head>
+<body>
+<div id="box"></div>
+</body>
+</html>

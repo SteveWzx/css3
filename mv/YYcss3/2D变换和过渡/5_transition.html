@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+#box{width:200px;height:200px;background:Red; position:absolute;left:0;top:0; transition:3s cubic-bezier(0.530, -0.465, 0.200, 1.650);}
+</style>
+<script>
+window.onload=function()
+{
+	var oBox=document.getElementById("box");
+	oBox.onclick=function()
+	{
+		oBox.style.cssText="left:700px;";
+	};
+};
+</script>
+</head>
+<body>
+<div id="box"></div>
+</body>
+</html>

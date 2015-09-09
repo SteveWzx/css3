@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+#box{width:100px;height:100px;margin:30px auto;padding:100px;border:2px solid #000;}
+#div{width:100px;height:100px;background:blue; transform:rotate(30deg);}
+/* getComputedStyle(obj, false)[name];*/
+</style>
+<script>
+window.onload=function()
+{
+	var oDiv=document.getElementById("div");
+	/*alert(getComputedStyle(oDiv, false)["transform"]);
+		matrix(1,0,0,1,0,0);
+		filter: progid:DXImageTransform.Microsoft.Matrix( M11= 1, M12= 0, M21= 0 , M22=1,SizingMethod='auto expand');
+	*/
+	
+};
+</script>
+</head>
+<body>
+<div id="box">
+	<div id="div"></div>
+</div>
+</body>
+</html>

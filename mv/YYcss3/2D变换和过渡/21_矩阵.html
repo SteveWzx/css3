@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+#box{width:100px;height:100px;margin:30px auto;padding:100px;border:2px solid #000; position:relative;}
+#div{width:100px;height:100px;background:blue; transition:1s; position:absolute; left:100px;top:100px;}
+/* getComputedStyle(obj, false)[name];*/
+</style>
+<script>
+window.onload=function()
+{
+	var oDiv=document.getElementById("div");
+	//fnScale(oDiv,2,3)
+	fnSkew(oDiv,30,30);
+	
+};
+function fnSkew(obj,x,y)
+{
+	x=Math.tan(x/180*Math.PI);
+	y=Math.tan(y/180*Math.PI);
+	obj.style.transform="matrix(1,"+y+","+x+",1,0,0)";
+	obj.style.filter="progid:DXImageTransform.Microsoft.Matrix( M11= 1, M12= "+x+", M21= "+y+", M22=1,SizingMethod='auto expand')";
+	obj.style.left=(obj.offsetParent.clientWidth-obj.offsetWidth)/2+"px";
+	obj.style.top=(obj.offsetParent.clientHeight-obj.offsetHeight)/2+"px";
+}
+</script>
+</head>
+<body>
+<div id="box">
+	<div id="div"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+#box{width:300px;height:200px;border:10px solid #000; position:relative; overflow:hidden;}
+#list{ margin:0;padding:0; list-style:none; position:absolute;left:0;top:0;width:500%;transition:.5s;}
+#list li{width:298px;height:198px; font:100px/198px "宋体"; color:#fff; text-align:center; border:1px solid #fff; float:left; background:#000; }
+#box:hover #list{ left:-600px;}
+</style>
+</head>
+<body>
+<div id="box">
+	<ul id="list">
+    	<li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+    </ul>
+</div>
+</body>
+</html>
